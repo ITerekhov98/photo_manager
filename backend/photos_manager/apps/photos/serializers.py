@@ -21,6 +21,11 @@ class PhotoListSerializer(serializers.ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     url = serializers.SerializerMethodField()
+    persons = serializers.SlugRelatedField(
+        slug_field='name',
+        many=True,
+        read_only=True,
+    )
     created_at = serializers.DateTimeField(
         read_only=True,
         format="%Y-%m-%dT%H:%M:%S"
@@ -32,7 +37,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'id',
             'url',
             'geolocations',
-            'people',
+            'persons',
             'title',
             'description',
             'created_at'

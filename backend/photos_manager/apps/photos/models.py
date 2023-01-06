@@ -12,11 +12,6 @@ class PhotoEntity(models.Model):
         verbose_name='Локации на фото',
         blank=True,
     )
-    people = models.ManyToManyField(
-        'people.Person',
-        verbose_name='Люди на фотографии',
-        blank=True,
-    )
     title = models.CharField('Название', max_length=50, blank=True)
     description = models.TextField('Описание', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

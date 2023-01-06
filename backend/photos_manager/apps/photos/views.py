@@ -2,6 +2,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.decorators import api_view
 from .serializers import PhotoListSerializer, PhotoSerializer
 from .models import PhotoEntity
+from ..people.models import Person
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
@@ -26,8 +27,15 @@ class CreatePhotoEntityView(CreateAPIView):
         if not photo:
             raise ParseError('Request has no resource file attached.')
         photo = PhotoEntity.objects.create(
-            photo=photo
+            photo=photo,
+            title=request.data.get('title') or '',
+            description=request.data.get('description') or '',
         )
+        if persons := request.data.get('persons'):
+            persons_names = persons.split(',')
+            Person.objects.bulk_create(
+                [Person(name=name.strip(), photo=photo) for name in persons_names]
+            )
         response = PhotoSerializer(
             photo,
             context={"request": request}    
