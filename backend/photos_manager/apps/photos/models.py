@@ -10,10 +10,12 @@ class PhotoEntity(models.Model):
     geolocations = models.ManyToManyField(
         'geolocations.Geolocation',
         verbose_name='Локации на фото',
+        blank=True,
     )
     people = models.ManyToManyField(
         'people.Person',
         verbose_name='Люди на фотографии',
+        blank=True,
     )
     title = models.CharField('Название', max_length=50, blank=True)
     description = models.TextField('Описание', blank=True)
