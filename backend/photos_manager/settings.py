@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'photos_manager.apps.photos',
+    'photos_manager.apps.users',
+    'photos_manager.apps.geolocations',
+    'photos_manager.apps.people',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
