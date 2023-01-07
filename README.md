@@ -26,7 +26,7 @@
 
 Собираем и запускаем контейнер:
 ```
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose -f docker-compose.dev.yaml up --build
 ```
 Подождите несколько секунд чтобы запустились все сервисы и собралась статика. Сайт будет доступен на [127.0.0.1:80](https://127.0.0.1:80)
 
@@ -39,9 +39,9 @@ CERTBOT_EMAIL=example@email.com
 
 Собираем и запускаем контейнер:
 ```
-docker-compose -f docker-compose.prod.yml up --build
+docker-compose -f docker-compose.prod_ssl.yaml up --build
 ```
 логи сервисов можно посмотреть выполнив в консоли команду:
 ```
-docker-compose -f docker-compose.prod.yml logs -f
+docker-compose -f docker-compose.prod_ssl.yaml logs -f
 ```
