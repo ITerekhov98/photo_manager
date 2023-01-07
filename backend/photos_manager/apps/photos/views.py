@@ -34,7 +34,7 @@ class PhotosListView(ListAPIView):
         latitude = self.request.query_params.get('lat')
         longitude = self.request.query_params.get('lon')
         coordinats = (latitude, longitude)
-        if all(coordinats):
+        if any(coordinats):
             queryset = filters.filter_by_coordinats(queryset, coordinats)
 
         return queryset

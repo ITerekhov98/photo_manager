@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db.models import QuerySet
+from rest_framework.exceptions import ParseError
 
 from .models import PhotoEntity
 
@@ -8,8 +9,10 @@ from .models import PhotoEntity
 def filter_by_date(
         queryset: QuerySet[PhotoEntity],
         raw_date: str) -> QuerySet[PhotoEntity]:
-
-    photo_date = date.fromisoformat(raw_date)
+    try:
+        photo_date = date.fromisoformat(raw_date)
+    except ValueError:
+        raise ParseError('invalid date format. Use year-month-day')
     return [
         photo for photo in queryset if photo.created_at == photo_date
     ]
@@ -39,7 +42,12 @@ def filter_by_coordinats(
         queryset: QuerySet[PhotoEntity],
         coordinats: tuple[str | float]) -> QuerySet[PhotoEntity]:
 
-    coordinats = tuple(float(item) for item in coordinats)
+    if len(coordinats) != 2 or not all(coordinats):
+        raise ParseError('invalid coordinats')
+    try:
+        coordinats = tuple(float(item) for item in coordinats)
+    except ValueError:
+        raise ParseError('invalid coordinats')
     return [
         photo for photo in queryset if coordinats
         in photo.geolocations.values_list('latitude', 'longitude')

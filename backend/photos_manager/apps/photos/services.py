@@ -1,7 +1,9 @@
+from django.http import HttpRequest
+
 from ..geolocations.models import Geolocation
+from .models import PhotoEntity
 
-
-def add_geolocation(photo, request):
+def add_geolocation(photo: PhotoEntity, request: HttpRequest) -> None:
     address = request.data.get('address', '')
     latitude = request.data.get('latitude')
     longitude = request.data.get('longitude')
