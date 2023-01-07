@@ -1,5 +1,6 @@
 from datetime import date
-
+from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
@@ -8,6 +9,7 @@ from .models import PhotoEntity
 from ..people.models import Person
 from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from rest_framework.exceptions import ParseError
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from .services import add_geolocation
@@ -69,3 +71,15 @@ class PhotoEntityDetailView(RetrieveAPIView):
     queryset = PhotoEntity.objects.all()
     serializer_class = PhotoSerializer
     lookup_field = 'id'
+
+
+@api_view(['GET'])
+def autocomplete_person_name(request, photo_id):
+    photo = get_object_or_404(PhotoEntity, id=photo_id)
+    name_beginning = request.query_params.get('name')
+    appropriate_names = photo.persons.filter(name__startswith=name_beginning) \
+                                     .values_list('name', flat=True)
+    if not appropriate_names:
+        return Response([], status=status.HTTP_404_NOT_FOUND)
+
+    return Response(appropriate_names, status=status.HTTP_200_OK)

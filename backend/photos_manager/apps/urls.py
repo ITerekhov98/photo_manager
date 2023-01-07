@@ -1,10 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 
 from .photos.views import PhotosListView, CreatePhotoEntityView, PhotoEntityDetailView
 
 
 urlpatterns = [
-    path('photos/', PhotosListView.as_view()),
-    path('photos/upload', CreatePhotoEntityView.as_view()),
-    path('photos/<uuid:id>/', PhotoEntityDetailView.as_view()),
+    path('photos/', include('photos_manager.apps.photos.urls')),
 ]
