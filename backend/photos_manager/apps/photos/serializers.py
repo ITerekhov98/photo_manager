@@ -10,6 +10,7 @@ class PhotoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = PhotoEntity
         fields = (
+            'id',
             'url',
         )
 

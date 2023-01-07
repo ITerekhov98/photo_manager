@@ -1,6 +1,6 @@
 from datetime import date
 
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.decorators import api_view
 from .serializers import PhotoListSerializer, PhotoSerializer
 from .models import PhotoEntity
@@ -61,3 +61,9 @@ class CreatePhotoEntityView(CreateAPIView):
             context={"request": request}    
         ).data
         return Response(response, status=status.HTTP_201_CREATED)
+
+
+class PhotoEntityDetailView(RetrieveAPIView):
+    queryset = PhotoEntity.objects.all()
+    serializer_class = PhotoSerializer
+    lookup_field = 'id'
