@@ -3,10 +3,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import handler404
-# from pets.apps.main.views import error404
+from django.http import HttpResponseNotFound
+import json
 
 
-# handler404 = error404
+def error404(request, exception):
+    response_data = {
+        'detail': 'Not found'
+    }
+    return HttpResponseNotFound(
+        json.dumps(response_data),
+        content_type="application/json"
+    )
+
+handler404 = error404
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -15,6 +15,7 @@ from rest_framework import status
 from .services import add_geolocation
 from . import filters
 
+
 class PhotosListView(ListAPIView):
     serializer_class = PhotoListSerializer
 
