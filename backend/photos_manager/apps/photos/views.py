@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from ..people.models import Person
 from .serializers import PhotoListSerializer, PhotoSerializer
 from .models import PhotoEntity
-from .services import add_geolocation
+from .services import add_geolocation, format_coordinats
 from . import filters
 
 
@@ -35,7 +35,8 @@ class PhotosListView(ListAPIView):
         longitude = self.request.query_params.get('lon')
         coordinats = (latitude, longitude)
         if any(coordinats):
-            queryset = filters.filter_by_coordinats(queryset, coordinats)
+            cleaned_coordinats = format_coordinats(coordinats)
+            queryset = filters.filter_by_coordinats(queryset, cleaned_coordinats)
 
         return queryset
 
