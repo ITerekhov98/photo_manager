@@ -1,17 +1,15 @@
-from datetime import date
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser
+from rest_framework.exceptions import ParseError
+from rest_framework.response import Response
+
+from ..people.models import Person
 from .serializers import PhotoListSerializer, PhotoSerializer
 from .models import PhotoEntity
-from ..people.models import Person
-from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
-from rest_framework.exceptions import ParseError
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
 from .services import add_geolocation
 from . import filters
 
@@ -20,10 +18,13 @@ class PhotosListView(ListAPIView):
     serializer_class = PhotoListSerializer
 
     def get_queryset(self):
-        queryset = PhotoEntity.objects.prefetch_related('geolocations', 'persons')
+        queryset = PhotoEntity.objects.prefetch_related(
+            'geolocations',
+            'persons'
+        )
         if raw_date := self.request.query_params.get('date'):
             queryset = filters.filter_by_date(queryset, raw_date)
-    
+
         if address := self.request.query_params.get('address'):
             queryset = filters.filter_by_address(queryset, address)
 
@@ -63,7 +64,7 @@ class CreatePhotoEntityView(CreateAPIView):
 
         response = PhotoSerializer(
             photo,
-            context={"request": request}    
+            context={"request": request}
         ).data
         return Response(response, status=status.HTTP_201_CREATED)
 

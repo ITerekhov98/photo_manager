@@ -1,5 +1,4 @@
 from ..geolocations.models import Geolocation
-from .models import PhotoEntity
 
 
 def add_geolocation(photo, request):
@@ -7,6 +6,7 @@ def add_geolocation(photo, request):
     latitude = request.data.get('latitude')
     longitude = request.data.get('longitude')
     location = None
+
     if all([latitude, longitude]):
         location, created = Geolocation.objects.get_or_create(
             latitude=latitude,

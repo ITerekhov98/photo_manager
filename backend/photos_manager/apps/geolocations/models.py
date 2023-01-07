@@ -12,4 +12,5 @@ class Geolocation(models.Model):
         unique_together = ('latitude', 'longitude',)
 
     def __str__(self) -> str:
-        return self.address if self.address else f'{self.latitude} {self.longitude}'
+        return self.address if self.address else \
+               f'{self.latitude} {self.longitude}'

@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'photos_manager.apps.photos',
-    'photos_manager.apps.users',
     'photos_manager.apps.geolocations',
     'photos_manager.apps.people',
     'django_cleanup.apps.CleanupConfig',

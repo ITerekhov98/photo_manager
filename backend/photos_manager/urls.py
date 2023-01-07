@@ -16,6 +16,7 @@ def error404(request, exception):
         content_type="application/json"
     )
 
+
 handler404 = error404
 
 urlpatterns = [
