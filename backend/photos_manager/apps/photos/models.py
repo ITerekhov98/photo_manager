@@ -9,6 +9,7 @@ class PhotoEntity(models.Model):
     photo = models.ImageField('Фото', upload_to='photos')
     geolocations = models.ManyToManyField(
         'geolocations.Geolocation',
+        related_name='photos',
         verbose_name='Локации на фото',
         blank=True,
     )

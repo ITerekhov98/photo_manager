@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ..photos.models import PhotoEntity
-
+from ..geolocations.serializers import GeolocationSerializer
 
 class PhotoListSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
@@ -30,6 +30,7 @@ class PhotoSerializer(serializers.ModelSerializer):
         read_only=True,
         format="%Y-%m-%dT%H:%M:%S"
     )
+    geolocations = GeolocationSerializer(many=True)
 
     class Meta:
         model = PhotoEntity

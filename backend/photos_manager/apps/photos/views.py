@@ -7,6 +7,8 @@ from rest_framework.parsers import JSONParser, FileUploadParser, MultiPartParser
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 from rest_framework import status
+from .services import add_geolocation
+
 
 class PhotosListView(ListAPIView):
     serializer_class = PhotoListSerializer
@@ -26,6 +28,7 @@ class CreatePhotoEntityView(CreateAPIView):
         photo = request.data.get('photo')
         if not photo:
             raise ParseError('Request has no resource file attached.')
+
         photo = PhotoEntity.objects.create(
             photo=photo,
             title=request.data.get('title') or '',
@@ -36,6 +39,8 @@ class CreatePhotoEntityView(CreateAPIView):
             Person.objects.bulk_create(
                 [Person(name=name.strip(), photo=photo) for name in persons_names]
             )
+        add_geolocation(photo, request)
+
         response = PhotoSerializer(
             photo,
             context={"request": request}    
