@@ -11,4 +11,6 @@ from django.conf.urls import handler404
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('photos_manager.apps.urls')),
+    path(r'auth/', include('djoser.urls')),
+    path(r'auth/', include('djoser.urls.authtoken')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

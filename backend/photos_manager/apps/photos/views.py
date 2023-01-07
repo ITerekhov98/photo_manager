@@ -2,6 +2,7 @@ from datetime import date
 
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from .serializers import PhotoListSerializer, PhotoSerializer
 from .models import PhotoEntity
 from ..people.models import Person
@@ -36,7 +37,8 @@ class PhotosListView(ListAPIView):
 
 
 class CreatePhotoEntityView(CreateAPIView):
-    parser_classes = [JSONParser, MultiPartParser, FileUploadParser]
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser,]
     serializer_class = PhotoSerializer
 
     def post(self, request, *args, **kwargs):
