@@ -15,7 +15,7 @@ class PhotoEntity(models.Model):
     )
     title = models.CharField('Название', max_length=50, blank=True)
     description = models.TextField('Описание', blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Фотография'

@@ -3,6 +3,7 @@ from rest_framework import serializers
 from ..photos.models import PhotoEntity
 from ..geolocations.serializers import GeolocationSerializer
 
+
 class PhotoListSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
 
@@ -26,9 +27,8 @@ class PhotoSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True,
     )
-    created_at = serializers.DateTimeField(
+    created_at = serializers.DateField(
         read_only=True,
-        format="%Y-%m-%dT%H:%M:%S"
     )
     geolocations = GeolocationSerializer(many=True)
 
