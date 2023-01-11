@@ -1,12 +1,13 @@
 ### Photo manager, based on drf and postgresql.
 
 ## Функционал
-### [Ссылка на сайт](https://iterekhov.ru/api/v1/photos/)
 ### [Ссылка на postman-коллекцию](https://www.postman.com/navigation-astronaut-23060129/workspace/iterekhov/collection/24836864-e622ed07-0ea4-4a98-a50a-cb4b03ec9149?action=share&creator=24836864)
 #### Как быстро потестить API:
 - Зарегистрируйтесь в [Postman](https://identity.getpostman.com/login);
 - Перейдите по ссылке на postman-коллекцию выше, создайте форк (Ctrl+Alt+F);
 - Таким же образом скопируйте к себе [Тестовый environment с access token](https://www.postman.com/navigation-astronaut-23060129/workspace/iterekhov/environment/24836864-19357dff-7cec-405b-b18c-4b4523517525);
+- Разверните сервис локально, используя инструкции ниже;
+- Заполните значения в environment, в соответствии со своими данными;
 - Перейдите во вкладку коллекции и в правом верхнем углу выберите тестовый environment;
 - Можете пользоваться :)
 
